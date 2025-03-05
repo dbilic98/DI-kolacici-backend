@@ -2,5 +2,6 @@
 <project version="4">
   <component name="DiffGenerationConfig">
     <option name="liquibaseAuthor" value="" />
+    <option name="snapshotDbValue" value="b90f2f5a-94fb-4e60-803a-2133eeb9acae" />
   </component>
 </project>
