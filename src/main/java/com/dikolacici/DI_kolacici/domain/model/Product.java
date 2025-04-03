@@ -26,17 +26,20 @@ public class Product {
     @Column(name = "price", columnDefinition = "DECIMAL(5,2)")
     private double price;
 
-    private String imageUrl;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] imageData;
+
+    private String imageType;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category categoryId;
 
-    public Product(String productName, String description, double price, String imageUrl, Category categoryId) {
+    public Product(String productName, String description, double price,  Category categoryId) {
         this.productName = productName;
         this.description = description;
         this.price = price;
-        this.imageUrl = imageUrl;
         this.categoryId = categoryId;
     }
 }

@@ -17,7 +17,9 @@ public class ResponseProductDto {
 
     private double price;
 
-    private String imageUrl;
+    private String imageType;
 
-    private long categoryId;
+    private Long categoryId;
+
+    private byte[] imageData;
 }

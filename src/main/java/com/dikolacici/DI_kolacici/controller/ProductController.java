@@ -8,7 +8,11 @@ import com.dikolacici.DI_kolacici.domain.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/products")
@@ -35,8 +39,9 @@ public class ProductController {
                 product.getProductName(),
                 product.getDescription(),
                 product.getPrice(),
-                product.getImageUrl(),
-                product.getCategoryId().getId()
+                product.getImageType(),
+                product.getCategoryId().getId(),
+                product.getImageData()
         );
     }
 
@@ -46,17 +51,17 @@ public class ProductController {
         return toResponseDto(productById);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseProductDto createProduct(@Valid @RequestBody RequestProductDto requestProductDto) {
-        Product createdProduct = productService.createProduct(requestProductDto);
+    public ResponseProductDto createProduct(@Valid @ModelAttribute RequestProductDto requestProductDto, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+        Product createdProduct = productService.createProduct(requestProductDto , imageFile);
         return toResponseDto(createdProduct);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseProductDto updateProduct(@PathVariable("id") Long id, @Valid @RequestBody RequestProductDto requestProductDto) {
-        Product updatedProduct = productService.updateProduct(id, requestProductDto);
+    public ResponseProductDto updateProduct(@PathVariable("id") Long id, @Valid @ModelAttribute RequestProductDto requestProductDto, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
+        Product updatedProduct = productService.updateProduct(id, requestProductDto, imageFile);
         return toResponseDto(updatedProduct);
     }
 

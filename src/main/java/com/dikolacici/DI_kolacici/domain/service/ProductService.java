@@ -11,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -38,16 +40,21 @@ public class ProductService {
         return optionalProduct.get();
     }
 
-    public Product createProduct(RequestProductDto requestProductDto) {
+    public Product createProduct(RequestProductDto requestProductDto, MultipartFile imageFile) throws IOException {
         Optional<Category> optionalCategory = categoryRepository.findById(requestProductDto.categoryId());
         if(optionalCategory.isEmpty()) {
             throw new CategoryNotFoundException("Category with the given ID is not found.");
         }
-        Product createdProduct = new Product(requestProductDto.productName(), requestProductDto.description(), requestProductDto.price(), requestProductDto.imageUrl(), optionalCategory.get());
+        Product createdProduct = new Product(requestProductDto.productName(), requestProductDto.description(), requestProductDto.price(), optionalCategory.get());
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            createdProduct.setImageData(imageFile.getBytes());
+            createdProduct.setImageType(imageFile.getContentType());
+        }
         return productRepository.save(createdProduct);
     }
 
-    public Product updateProduct(Long id, RequestProductDto requestProductDto) {
+    public Product updateProduct(Long id, RequestProductDto requestProductDto, MultipartFile imageFile) throws IOException {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if(optionalProduct.isEmpty()) {
             throw new ProductNotFoundException("Product with ID " + id + " is not found.");
@@ -56,7 +63,11 @@ public class ProductService {
         updatedProduct.setProductName(requestProductDto.productName());
         updatedProduct.setDescription(requestProductDto.description());
         updatedProduct.setPrice(requestProductDto.price());
-        updatedProduct.setImageUrl(requestProductDto.imageUrl());
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            updatedProduct.setImageData(imageFile.getBytes());
+            updatedProduct.setImageType(imageFile.getContentType());
+        }
         return productRepository.save(updatedProduct);
     }
 
