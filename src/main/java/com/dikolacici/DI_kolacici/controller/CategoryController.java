@@ -24,7 +24,7 @@ public class CategoryController {
     public PaginatedResponse<ResponseCategoryDto> getCategory(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize) {
-        Page<Category> allCategory = categoryService.getAllCategory(pageNumber, pageSize);
+        Page<Category> allCategory = categoryService.getAllCategories(pageNumber, pageSize);
         Page<ResponseCategoryDto> map = allCategory.map(this::toResponseDto);
         return new PaginatedResponse<>(map);
     }

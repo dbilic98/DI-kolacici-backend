@@ -20,7 +20,7 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Page<Category> getAllCategory(int pageNumber, int pageSize) {
+    public Page<Category> getAllCategories(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return categoryRepository.findAll(pageable);
     }
