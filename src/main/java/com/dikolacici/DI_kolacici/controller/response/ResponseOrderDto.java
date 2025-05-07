@@ -1,11 +1,13 @@
 package com.dikolacici.DI_kolacici.controller.response;
 
+import com.dikolacici.DI_kolacici.controller.request.RequestOrderItemDto;
 import com.dikolacici.DI_kolacici.domain.enumeration.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -20,5 +22,7 @@ public class ResponseOrderDto {
 
     private String note;
 
-    private Long customerId;
+    private ResponseCustomerDto customer;
+
+    private List<ResponseOrderItemDto> orderItemList;
 }
