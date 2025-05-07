@@ -2,7 +2,7 @@ CREATE TABLE orders
 (
     id          BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
     order_date  DATE                      NOT NULL,
-    status      TINYINT,
+    status      VARCHAR(20),
     note        TEXT,
     customer_id BIGINT(20),
 
