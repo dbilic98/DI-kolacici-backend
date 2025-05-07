@@ -26,5 +26,11 @@ public class Customer {
 
     private String phone;
 
-    private String address;
+    private String street;
+
+    private String streetNumber;
+
+    private String city;
+
+    private String country;
 }
