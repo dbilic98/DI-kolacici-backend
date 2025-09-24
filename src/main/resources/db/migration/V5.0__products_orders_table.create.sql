@@ -1,4 +1,4 @@
-CREATE TABLE orders_items
+CREATE TABLE products_orders
 (
     id         BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
     quantity   BIGINT                    NOT NULL,
