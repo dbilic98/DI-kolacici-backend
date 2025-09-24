@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseOrderItemDto {
+public class ResponseProductOrderDto {
 
     private long quantity;
 

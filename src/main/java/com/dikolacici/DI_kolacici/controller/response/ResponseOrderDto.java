@@ -1,6 +1,5 @@
 package com.dikolacici.DI_kolacici.controller.response;
 
-import com.dikolacici.DI_kolacici.controller.request.RequestOrderItemDto;
 import com.dikolacici.DI_kolacici.domain.enumeration.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +23,5 @@ public class ResponseOrderDto {
 
     private ResponseCustomerDto customer;
 
-    private List<ResponseOrderItemDto> orderItemList;
+    private List<ResponseProductOrderDto> orderItemList;
 }
