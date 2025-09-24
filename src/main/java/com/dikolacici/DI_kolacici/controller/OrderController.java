@@ -3,7 +3,7 @@ package com.dikolacici.DI_kolacici.controller;
 import com.dikolacici.DI_kolacici.controller.response.*;
 import com.dikolacici.DI_kolacici.domain.model.Customer;
 import com.dikolacici.DI_kolacici.domain.model.Order;
-import com.dikolacici.DI_kolacici.domain.model.OrderItem;
+import com.dikolacici.DI_kolacici.domain.model.ProductOrder;
 import com.dikolacici.DI_kolacici.domain.service.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -21,20 +21,20 @@ public class OrderController {
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
-    private List<ResponseOrderItemDto> mapOrderItemsToResponseDtos(List<OrderItem> orderItems) {
-        List<ResponseOrderItemDto> responseOrderItemDtos = new ArrayList<>();
+    private List<ResponseProductOrderDto> mapOrderItemsToResponseDtos(List<ProductOrder> orderItems) {
+        List<ResponseProductOrderDto> responseProductOrderDtos = new ArrayList<>();
 
-        for (OrderItem orderItem : orderItems) {
-            ResponseOrderItemDto responseOrderItemDto = new ResponseOrderItemDto(
+        for (ProductOrder orderItem : orderItems) {
+            ResponseProductOrderDto responseProductOrderDto = new ResponseProductOrderDto(
                     orderItem.getQuantity(),
                     orderItem.getProduct().getProductName());
-            responseOrderItemDtos.add(responseOrderItemDto);
+            responseProductOrderDtos.add(responseProductOrderDto);
         }
-        return responseOrderItemDtos;
+        return responseProductOrderDtos;
     }
 
     private ResponseOrderDto toResponseDto(Order order) {
-        List<ResponseOrderItemDto> responseOrderItemDtos = mapOrderItemsToResponseDtos(order.getOrderItems());
+        List<ResponseProductOrderDto> responseProductOrderDtos = mapOrderItemsToResponseDtos(order.getOrderItems());
 
         Customer customer = order.getCustomer();
         ResponseCustomerDto responseCustomerDto = new ResponseCustomerDto(
@@ -54,7 +54,7 @@ public class OrderController {
                 order.getStatus(),
                 order.getNote(),
                 responseCustomerDto,
-                responseOrderItemDtos);
+                responseProductOrderDtos);
     }
 
     @GetMapping
@@ -64,5 +64,23 @@ public class OrderController {
         Page<Order> allOrders = orderService.getAllOrders(pageNumber, pageSize);
         Page<ResponseOrderDto> map = allOrders.map(this::toResponseDto);
         return new PaginatedResponse<>(map);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseOrderDto getOrderById(@PathVariable("id") Long id) {
+        Order orderById = orderService.getOrderById(id);
+        return toResponseDto(orderById);
+
+    }
+    @PutMapping("/{id}/accept")
+    public ResponseOrderDto acceptOrder(@PathVariable("id") Long id) {
+        orderService.acceptOrder(id);
+        return toResponseDto(orderService.getOrderById(id));
+    }
+
+    @PutMapping("/{id}/reject")
+    public ResponseOrderDto rejectOrder(@PathVariable("id") Long id) {
+        orderService.rejectOrder(id);
+        return toResponseDto(orderService.getOrderById(id));
     }
 }
