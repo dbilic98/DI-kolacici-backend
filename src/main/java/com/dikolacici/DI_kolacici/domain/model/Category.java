@@ -19,8 +19,4 @@ public class Category {
     private Long id;
 
     private String categoryName;
-
-    public Category(String categoryName) {
-        this.categoryName = categoryName;
-    }
 }
