@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Nova narudžba</title>
+</head>
+<body>
+<h2>Nova narudžba</h2>
+<p>Korisnik <strong th:text="${firstName + ' ' + lastName}"></strong> je napravio novu narudžbu (ID: <span th:text="${orderId}"></span>).</p>
+
+<h3>Detalji:</h3>
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+  <tr>
+    <th>Proizvod</th>
+    <th>Količina</th>
+    <th>Cijena</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="item : ${orderItems}">
+    <td th:text="${item.product.name}"></td>
+    <td th:text="${item.quantity}"></td>
+    <td th:text="${item.product.price}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<p>Ukupna cijena: <strong th:text="${totalPrice}"></strong></p>
+</body>
+</html>
