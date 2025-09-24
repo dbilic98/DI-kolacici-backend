@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Prihvaćena narudžba</title>
+</head>
+<body>
+<h2>Poštovani <span th:text="${firstName}"></span>,</h2>
+<p>Vaša narudžba je uspješno prihvaćena. Hvala Vam na povjerenju!</p>
+
+<h3>Detalji narudžbe:</h3>
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+  <tr>
+    <th>Proizvod</th>
+    <th>Količina</th>
+    <th>Cijena</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="item : ${orderItems}">
+    <td th:text="${item.product.name}"></td>
+    <td th:text="${item.quantity}"></td>
+    <td th:text="${item.product.price} + ' €'"></td>
+  </tr>
+  </tbody>
+</table>
+
+<p>Ukupno: <strong th:text="${totalPrice} + ' €'"></strong></p>
+
+<hr>
+<p style="font-size:12px; color:gray;">
+  &copy; 2025 DI kolačići
+</p>
+</body>
+</html>
