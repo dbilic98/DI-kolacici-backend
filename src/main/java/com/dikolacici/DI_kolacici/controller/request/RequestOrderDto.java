@@ -9,13 +9,6 @@ import java.util.List;
 
 public record RequestOrderDto (
 
-        @NotNull(message = "Order date is mandatory") @FutureOrPresent(message = "The date must be today or in the future")
-        LocalDate orderDate,
-
         @Size(min = 4, max = 50, message = "Note should be at least 4 characters, and should not exceed 50 characters.")
-        String note,
-
-        Long customerId,
-
-        List<RequestOrderItemDto> orderItemList) {
+        String note) {
 }
