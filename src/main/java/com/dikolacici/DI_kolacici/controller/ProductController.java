@@ -1,6 +1,6 @@
 package com.dikolacici.DI_kolacici.controller;
 
-import com.dikolacici.DI_kolacici.controller.request.RequestProductDto;
+import com.dikolacici.DI_kolacici.controller.request.RequestProductOrderDto;
 import com.dikolacici.DI_kolacici.controller.response.PaginatedResponse;
 import com.dikolacici.DI_kolacici.controller.response.ResponseProductDto;
 import com.dikolacici.DI_kolacici.domain.model.Product;
@@ -49,25 +49,5 @@ public class ProductController {
     public ResponseProductDto getProductById(@PathVariable Long id) {
         Product productById = productService.getProductById(id);
         return toResponseDto(productById);
-    }
-
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseProductDto createProduct(@Valid @ModelAttribute RequestProductDto requestProductDto, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        Product createdProduct = productService.createProduct(requestProductDto , imageFile);
-        return toResponseDto(createdProduct);
-    }
-
-    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseProductDto updateProduct(@PathVariable("id") Long id, @Valid @ModelAttribute RequestProductDto requestProductDto, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
-        Product updatedProduct = productService.updateProduct(id, requestProductDto, imageFile);
-        return toResponseDto(updatedProduct);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable("id") Long id) {
-        productService.deleteProduct(id);
     }
 }

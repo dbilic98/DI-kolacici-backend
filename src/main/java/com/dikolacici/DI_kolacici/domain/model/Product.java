@@ -35,11 +35,4 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category categoryId;
-
-    public Product(String productName, String description, double price,  Category categoryId) {
-        this.productName = productName;
-        this.description = description;
-        this.price = price;
-        this.categoryId = categoryId;
-    }
 }
