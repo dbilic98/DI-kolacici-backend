@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,5 +36,11 @@ public class Order {
     private Customer customer;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<ProductOrder> orderItems = new ArrayList<>();
+
+    public Order(LocalDateTime now, OrderStatus orderStatus, Customer customer) {
+        this.orderDate = LocalDate.now();
+        this.status = orderStatus;
+        this.customer = customer;
+    }
 }
