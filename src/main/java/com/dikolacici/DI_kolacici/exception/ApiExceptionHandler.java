@@ -17,7 +17,7 @@ import java.util.List;
 @ControllerAdvice
 public class ApiExceptionHandler  extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({CategoryNotFoundException.class})
+    @ExceptionHandler({CategoryNotFoundException.class, ProductNotFoundException.class, OrderNotFoundException.class})
 
     public ResponseEntity<Object> handleNotFoundException(Exception e, WebRequest request) {
         List<String> messages = new ArrayList<>();
